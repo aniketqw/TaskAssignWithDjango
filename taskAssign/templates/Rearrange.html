@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Rearranging</title>
+<style>
+.team-member {
+  float: left;
+  width: 150px;
+  height: auto;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.task-item {
+  margin: 5px;
+  padding: 5px;
+  background-color: #fff;
+  cursor: grab;
+}
+
+.task-item:hover {
+  background-color: #e0e0e0;
+}
+</style>
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text/plain", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text/plain");
+  var task = document.getElementById(data);
+  var destination = ev.target;
+
+  // If the drop target is not the task container itself, find the closest task container
+  if (!destination.classList.contains("team-member")) {
+    destination = destination.closest(".team-member");
+  }
+
+  // If the destination is not null, move the task to the destination
+  if (destination) {
+    destination.appendChild(task);
+  }
+}
+</script>
+</head>
+<body>
+
+<h2>Rearranging Tasks:</h2>
+<p>Drag the tasks back and forth between the team members to reassign them.</p>
+
+<div class="team-member" id="team1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <h3>Ravi</h3>
+  <div class="task-item" draggable="true" ondragstart="drag(event)" id="task1">Task 1</div>
+  <div class="task-item" draggable="true" ondragstart="drag(event)" id="task2">Task 2</div>
+</div>
+
+<div class="team-member" id="team2" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <h3>Akshit</h3>
+</div>
+
+<div class="team-member" id="team3" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>Aniket</h3>
+    <div class="task-item" draggable="true" ondragstart="drag(event)" id="task3">Task 3</div>
+    <div class="task-item" draggable="true" ondragstart="drag(event)" id="task4">Task 4</div>
+</div>
+
+<div class="team-member" id="team4" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>Dhruv</h3>
+    <div class="task-item" draggable="true" ondragstart="drag(event)" id="task5">Task 5</div>
+    <div class="task-item" draggable="true" ondragstart="drag(event)" id="task6">Task 6</div>
+</div>
+
+</body>
+</html>
